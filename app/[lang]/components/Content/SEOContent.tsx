@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ElementType, ReactNode } from "react";
 
 interface SEOContentProps {
   children: ReactNode;
@@ -21,11 +21,33 @@ export function SEOContent({
   heading,
   id,
 }: SEOContentProps) {
-  const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
+  // Workaround for lack of JSX.IntrinsicElements namespace error in some TS setups:
+  // Dynamically select heading element, fallback to h2 if level is invalid.
+  const getHeadingElement = (
+    level: number,
+    headingText: string
+  ): React.ReactNode => {
+    switch (level) {
+      case 1:
+        return <h1 className="text-3xl font-bold mb-6">{headingText}</h1>;
+      case 2:
+        return <h2 className="text-3xl font-bold mb-6">{headingText}</h2>;
+      case 3:
+        return <h3 className="text-3xl font-bold mb-6">{headingText}</h3>;
+      case 4:
+        return <h4 className="text-3xl font-bold mb-6">{headingText}</h4>;
+      case 5:
+        return <h5 className="text-3xl font-bold mb-6">{headingText}</h5>;
+      case 6:
+        return <h6 className="text-3xl font-bold mb-6">{headingText}</h6>;
+      default:
+        return <h2 className="text-3xl font-bold mb-6">{headingText}</h2>;
+    }
+  };
 
   return (
     <section className={className} id={id}>
-      {heading && <HeadingTag className="text-3xl font-bold mb-6">{heading}</HeadingTag>}
+      {heading && getHeadingElement(headingLevel, heading)}
       <div className="prose prose-lg max-w-none">{children}</div>
     </section>
   );
@@ -42,7 +64,7 @@ export function SEOText({
 }: {
   children: ReactNode;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
 }) {
   return <Component className={className}>{children}</Component>;
 }

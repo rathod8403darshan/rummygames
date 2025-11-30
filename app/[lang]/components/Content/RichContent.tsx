@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ElementType, ReactNode } from "react";
 import Image from "next/image";
 
 interface RichContentProps {
@@ -27,15 +27,29 @@ export function RichContent({
   headingLevel = 2,
   image,
 }: RichContentProps) {
-  const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
-
+  // Use JSX syntax to render the heading tag dynamically
   return (
     <article className={`prose prose-lg max-w-none ${className}`}>
-      {heading && (
-        <HeadingTag className="text-3xl font-bold mb-6 text-gray-900">
-          {heading}
-        </HeadingTag>
-      )}
+      {heading && (() => {
+        // Only allow heading tags from h1 to h6
+        const level = Math.min(Math.max(headingLevel, 1), 6);
+        switch (level) {
+          case 1:
+            return <h1 className="text-3xl font-bold mb-6 text-gray-900">{heading}</h1>;
+          case 2:
+            return <h2 className="text-3xl font-bold mb-6 text-gray-900">{heading}</h2>;
+          case 3:
+            return <h3 className="text-3xl font-bold mb-6 text-gray-900">{heading}</h3>;
+          case 4:
+            return <h4 className="text-3xl font-bold mb-6 text-gray-900">{heading}</h4>;
+          case 5:
+            return <h5 className="text-3xl font-bold mb-6 text-gray-900">{heading}</h5>;
+          case 6:
+            return <h6 className="text-3xl font-bold mb-6 text-gray-900">{heading}</h6>;
+          default:
+            return null;
+        }
+      })()}
       {image && (
         <figure className="my-8">
           <Image
@@ -59,15 +73,18 @@ export function RichContent({
  * Rich Text Component
  * Optimized text component with semantic markup
  */
+
+interface RichTextProps {
+  children: ReactNode;
+  className?: string;
+  as?: ElementType;
+}
+
 export function RichText({
   children,
   className = "",
   as: Component = "p",
-}: {
-  children: ReactNode;
-  className?: string;
-  as?: keyof JSX.IntrinsicElements;
-}) {
+}: RichTextProps) {
   return <Component className={`text-lg leading-relaxed ${className}`}>{children}</Component>;
 }
 
