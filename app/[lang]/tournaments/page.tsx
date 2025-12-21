@@ -2,7 +2,7 @@ import { Breadcrumbs } from "../components/SEO/Breadcrumbs";
 import { StructuredData } from "../components/SEO/StructuredData";
 import { AdvancedStructuredData } from "../components/SEO/AdvancedStructuredData";
 import { CTA } from "../components/CTA";
-import Link from "next/link";
+import { Game, getGames } from "@/src/utils/games";
 import type { AdvancedSEOData } from "@/src/utils/advanced-seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -28,7 +28,12 @@ export default async function TournamentsPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const isHindi = lang === "hi";
+  const isHindi = lang === "hi";  
+
+  // Select random game **server-side**
+  const allGames = getGames();
+  const shuffled = [...allGames].sort(() => Math.random() - 0.5);
+  const randomGame: Game | null = shuffled[0] || null;
 
   const tournaments = [
     {
@@ -194,12 +199,14 @@ export default async function TournamentsPage({
                     <span className="font-bold text-gray-900">{tournament.time}</span>
                   </div>
                 </div>
-                <Link
-                  href={`/${lang}/download`}
+                <a
+                  href={randomGame?.link || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block w-full text-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
                 >
                   {isHindi ? "भाग लें" : "Join Now"}
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -213,29 +220,25 @@ export default async function TournamentsPage({
             {isHindi ? "टूर्नामेंट के फायदे" : "Tournament Benefits"}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: isHindi ? "बड़े पुरस्कार" : "Big Prizes",
-                description: isHindi
-                  ? "हर टूर्नामेंट में लाखों रुपये के पुरस्कार"
-                  : "Lakhs of rupees in prizes in every tournament",
-                icon: "💰",
-              },
-              {
-                title: isHindi ? "रोमांच" : "Thrill",
-                description: isHindi
-                  ? "हजारों खिलाड़ियों के साथ प्रतिस्पर्धा"
-                  : "Compete with thousands of players",
-                icon: "🎯",
-              },
-              {
-                title: isHindi ? "मान्यता" : "Recognition",
-                description: isHindi
-                  ? "चैंपियन बनें और मान्यता पाएं"
-                  : "Become a champion and get recognition",
-                icon: "🏆",
-              },
-            ].map((benefit, index) => (
+            {[{
+              title: isHindi ? "बड़े पुरस्कार" : "Big Prizes",
+              description: isHindi
+                ? "हर टूर्नामेंट में लाखों रुपये के पुरस्कार"
+                : "Lakhs of rupees in prizes in every tournament",
+              icon: "💰",
+            },{
+              title: isHindi ? "रोमांच" : "Thrill",
+              description: isHindi
+                ? "हजारों खिलाड़ियों के साथ प्रतिस्पर्धा"
+                : "Compete with thousands of players",
+              icon: "🎯",
+            },{
+              title: isHindi ? "मान्यता" : "Recognition",
+              description: isHindi
+                ? "चैंपियन बनें और मान्यता पाएं"
+                : "Become a champion and get recognition",
+              icon: "🏆",
+            }].map((benefit, index) => (
               <div
                 key={index}
                 className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center"
@@ -279,4 +282,3 @@ export default async function TournamentsPage({
     </>
   );
 }
-

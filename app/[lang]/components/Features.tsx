@@ -157,7 +157,7 @@ export function Features({ lang }: FeaturesProps) {
             </div>
             <div className="relative">
               <Image
-                src="/images/features-app.png"
+                src="/images/features-app.webp"
                 alt={isHindi ? "रम्मी गेम्स ऐप फीचर्स" : "Rummy Games App Features"}
                 width={600}
                 height={600}

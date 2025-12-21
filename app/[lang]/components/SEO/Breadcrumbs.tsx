@@ -17,9 +17,7 @@ export function Breadcrumbs({ lang, items }: BreadcrumbsProps) {
   const pathname = usePathname();
   const isHindi = lang === "hi";
 
-  const defaultItems: BreadcrumbItem[] = [
-    { label: isHindi ? "होम" : "Home", href: `/${lang}` },
-  ];
+  const defaultItems: BreadcrumbItem[] = [];
 
   // Auto-generate breadcrumbs from pathname if items not provided
   if (!items) {

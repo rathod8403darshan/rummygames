@@ -3,6 +3,7 @@ import { StructuredData } from "../components/SEO/StructuredData";
 import { AdvancedStructuredData } from "../components/SEO/AdvancedStructuredData";
 import { SEOContent } from "../components/Content/SEOContent";
 import Link from "next/link";
+import { getGames } from "@/src/utils/games";
 import type { AdvancedSEOData } from "@/src/utils/advanced-seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -44,11 +45,15 @@ export default async function HelpPage({
     ogImage: "https://www.rummygamesapp.com/images/help-og.jpg",
   };
 
+  // Get random game for download link
+  const allGames = getGames();
+  const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
+
   const helpCategories = [
     {
       title: isHindi ? "शुरुआत करना" : "Getting Started",
       links: [
-        { href: `/${lang}/download`, label: isHindi ? "ऐप डाउनलोड करें" : "Download App" },
+        { href: randomGame?.link || "#", label: isHindi ? "ऐप डाउनलोड करें" : "Download App", external: true },
         { href: `/${lang}/how-to-play`, label: isHindi ? "कैसे खेलें" : "How to Play" },
         { href: `/${lang}/rules`, label: isHindi ? "नियम" : "Rules" },
       ],
@@ -97,12 +102,23 @@ export default async function HelpPage({
                   <ul className="space-y-2">
                     {category.links.map((link, linkIndex) => (
                       <li key={linkIndex}>
-                        <Link
-                          href={link.href}
-                          className="text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                          {link.label}
-                        </Link>
+                        {link.external ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 font-medium"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            className="text-blue-600 hover:text-blue-800 font-medium"
+                          >
+                            {link.label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

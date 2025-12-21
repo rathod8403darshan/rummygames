@@ -31,28 +31,24 @@ export default async function HowToPlayPage({
       content: isHindi
         ? "रम्मी एक लोकप्रिय कार्ड गेम है जो स्किल और रणनीति पर आधारित है। इसमें खिलाड़ी कार्डों को सेट और सीक्वेंस में व्यवस्थित करते हैं। रम्मी भारत में सबसे लोकप्रिय कार्ड गेम्स में से एक है और इसे ऑनलाइन रियल कैश के साथ खेला जा सकता है।"
         : "Rummy is a popular card game based on skill and strategy. Players arrange cards into sets and sequences. Rummy is one of the most popular card games in India and can be played online with real cash.",
-      image: "/images/what-is-rummy.jpg",
     },
     {
       title: isHindi ? "रम्मी के नियम" : "Rummy Rules",
       content: isHindi
         ? "रम्मी में, प्रत्येक खिलाड़ी को 13 कार्ड मिलते हैं। लक्ष्य कम से कम 2 सीक्वेंस बनाना है, जिनमें से एक प्योर सीक्वेंस होना चाहिए (बिना जोकर के)। शेष कार्ड सेट या सीक्वेंस में व्यवस्थित होने चाहिए। पहले सभी कार्ड व्यवस्थित करने वाला खिलाड़ी जीतता है।"
         : "In Rummy, each player gets 13 cards. The goal is to form at least 2 sequences, one of which must be a pure sequence (without joker). Remaining cards should be arranged in sets or sequences. The first player to arrange all cards wins.",
-      image: "/images/rummy-rules.jpg",
     },
     {
       title: isHindi ? "सीक्वेंस और सेट" : "Sequences and Sets",
       content: isHindi
         ? "प्योर सीक्वेंस: एक ही सूट के क्रमागत कार्ड (जैसे 3♥, 4♥, 5♥)। इम्प्योर सीक्वेंस: जोकर के साथ सीक्वेंस। सेट: एक ही रैंक के अलग-अलग सूट के कार्ड (जैसे 7♥, 7♠, 7♦)।"
         : "Pure Sequence: Consecutive cards of the same suit (e.g., 3♥, 4♥, 5♥). Impure Sequence: Sequence with joker. Set: Cards of the same rank from different suits (e.g., 7♥, 7♠, 7♦).",
-      image: "/images/sequences-sets.jpg",
     },
     {
       title: isHindi ? "कैसे खेलें" : "How to Play",
       content: isHindi
         ? "1. ऐप डाउनलोड करें और अकाउंट बनाएं। 2. एक टेबल चुनें और प्रवेश शुल्क का भुगतान करें। 3. 13 कार्ड प्राप्त करें। 4. कार्डों को व्यवस्थित करें। 5. जब सभी कार्ड व्यवस्थित हो जाएं, 'फिनिश' बटन दबाएं। 6. जीतें और पुरस्कार प्राप्त करें।"
         : "1. Download the app and create an account. 2. Choose a table and pay entry fee. 3. Receive 13 cards. 4. Arrange your cards. 5. When all cards are arranged, press 'Finish' button. 6. Win and receive prizes.",
-      image: "/images/how-to-play.jpg",
     },
   ];
 
@@ -123,17 +119,6 @@ export default async function HowToPlayPage({
                 <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">
                   {section.content}
                 </p>
-              </div>
-              <div className="flex-1">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                  <Image
-                    src={section.image}
-                    alt={section.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-auto"
-                  />
-                </div>
               </div>
             </div>
           ))}

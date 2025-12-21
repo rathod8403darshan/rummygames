@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { getGames } from "@/src/utils/games";
+import type { Game } from "@/src/utils/games";
 
 interface HeroProps {
   lang: string;
@@ -11,6 +13,15 @@ interface HeroProps {
 export function Hero({ lang }: HeroProps) {
   const [isVisible, setIsVisible] = useState(false);
   const isHindi = lang === "hi";
+  const [randomGame, setRandomGame] = useState<Game | null>(null);
+  const [randomGames, setRandomGames] = useState<Game[]>([]);
+  
+  useEffect(() => {
+    const allGames = getGames();
+    const shuffled = [...allGames].sort(() => Math.random() - 0.5);
+    setRandomGame(shuffled[0]);
+    setRandomGames(shuffled.slice(0, 3));
+  }, []);
 
   useEffect(() => {
     setIsVisible(true);
@@ -96,20 +107,54 @@ export function Hero({ lang }: HeroProps) {
                 : "India's most trusted rummy gaming platform with 100% safe, legal, and instant withdrawals. Win big and withdraw instantly!"}
             </p>
 
+            {/* Random Games Download Buttons */}
+            <div className="mb-8">
+              <p className="text-white/80 mb-4 text-sm font-medium">
+                {isHindi ? "⭐ लोकप्रिय ऐप्स" : "⭐ Popular Apps"}
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                {randomGames.map((game) => (
+                  <a
+                    key={game.slug}
+                    href={game.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group px-4 py-2 bg-white/10 backdrop-blur-sm text-white font-semibold text-sm rounded-lg hover:bg-white/20 transition-all border border-white/20 flex items-center space-x-2"
+                  >
+                    <Image
+                      src={game.src}
+                      alt={game.name}
+                      width={24}
+                      height={24}
+                      className="w-6 h-6 rounded object-cover"
+                    />
+                    <span className="truncate max-w-[120px]">{game.name}</span>
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            </div>
+
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <Link
-                href={`/${lang}/download`}
-                className="group px-8 py-4 bg-white text-blue-600 font-bold text-lg rounded-xl hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center space-x-2"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" />
-                </svg>
-                <span>{isHindi ? "अभी डाउनलोड करें" : "Download Now"}</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
+              {randomGame && (
+                <a
+                  href={randomGame.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group px-8 py-4 bg-white text-blue-600 font-bold text-lg rounded-xl hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center space-x-2"
+                >
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" />
+                  </svg>
+                  <span>{isHindi ? "अभी डाउनलोड करें" : "Download Now"}</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              )}
               <Link
                 href={`/${lang}/how-to-play`}
                 className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-xl hover:bg-white/20 transition-all border-2 border-white/30 flex items-center justify-center space-x-2"
@@ -139,24 +184,31 @@ export function Hero({ lang }: HeroProps) {
             </div>
           </div>
 
-          {/* Right Image/Phone Mockup */}
-          <div className={`relative ${isVisible ? "animate-fade-in-up" : "opacity-0"}`}>
-            <div className="relative mx-auto max-w-md">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl transform rotate-6 opacity-20"></div>
-              <div className="relative bg-white rounded-3xl p-2 shadow-2xl">
-                <div className="bg-gray-900 rounded-2xl overflow-hidden">
-                  <Image
-                    src="/images/hero-phone.png"
-                    alt={isHindi ? "रम्मी गेम्स ऐप" : "Rummy Games App"}
-                    width={400}
-                    height={800}
-                    className="w-full h-auto"
-                    priority
-                  />
+          {/* Right Image - Random Game */}
+          {randomGame && (
+            <div className={`relative ${isVisible ? "animate-fade-in-up" : "opacity-0"}`}>
+              <div className="relative mx-auto max-w-md">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl transform rotate-6 opacity-20"></div>
+                <div className="relative bg-white rounded-3xl p-2 shadow-2xl">
+                  <a
+                    href={randomGame.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-2xl overflow-hidden hover:opacity-90 transition-opacity"
+                  >
+                    <Image
+                      src={randomGame.src}
+                      alt={`${randomGame.name} - ${isHindi ? "रम्मी गेम ऐप" : "Rummy Game App"}`}
+                      width={400}
+                      height={400}
+                      className="w-full h-auto rounded-2xl"
+                      priority
+                    />
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 

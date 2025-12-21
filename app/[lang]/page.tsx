@@ -6,6 +6,8 @@ import { CTA } from "./components/CTA";
 import { Breadcrumbs } from "./components/SEO/Breadcrumbs";
 import { StructuredData } from "./components/SEO/StructuredData";
 import { AdvancedStructuredData } from "./components/SEO/AdvancedStructuredData";
+import { GamesListing } from "./components/GamesListing";
+import { getGames } from "@/src/utils/games";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -44,11 +46,18 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export default async function HomePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<{ search?: string; app?: string }>;
 }) {
   const { lang } = await params;
+  const { search, app } = await searchParams;
   const isHindi = lang === "hi";
+  const games = getGames();
+
+  // Get featured app if search query matches a slug
+  const featuredSlug = app || (search ? games.find(g => g.slug.includes(search.toLowerCase()))?.slug : undefined);
 
   const seoData = {
     title: isHindi
@@ -69,7 +78,20 @@ export default async function HomePage({
       <StructuredData lang={lang} pageType="home" />
       <AdvancedStructuredData lang={lang} seoData={seoData} pageType="home" />
       <Breadcrumbs lang={lang} items={[{ label: isHindi ? "होम" : "Home", href: `/${lang}` }]} />
+      
+      {/* Hero Section */}
       <Hero lang={lang} />
+      
+      {/* Main Games Section - ALL games, route-matched game first */}
+      <div id="games">
+        <GamesListing 
+          games={games} 
+          lang={lang} 
+          searchQuery={search || ""}
+          featuredSlug={featuredSlug}
+        />
+      </div>
+
       <Features lang={lang} />
       <Testimonials lang={lang} />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

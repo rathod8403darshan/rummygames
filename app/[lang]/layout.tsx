@@ -16,12 +16,16 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
   const { lang } = await params;
   const isHindi = lang === "hi";
-  
+
   return {
-    title: isHindi 
+    title: isHindi
       ? "रम्मी गेम्स – ऑनलाइन रियल कैश रम्मी खेलें | rummygamesapp.com"
       : "Rummy Games – Play Real Cash Rummy Online | rummygamesapp.com",
     description: isHindi
@@ -42,8 +46,8 @@ export async function generateMetadata({ params }: { params: { lang: string } })
     alternates: {
       canonical: `/${lang}`,
       languages: {
-        "en": "/en",
-        "hi": "/hi",
+        en: "/en",
+        hi: "/hi",
         "x-default": "/en",
       },
     },
@@ -103,24 +107,12 @@ export default async function LangLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  
+
   return (
-    <html lang={lang} className={`${inter.variable} ${poppins.variable}`}>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-        <link rel="manifest" href="/icons/site.webmanifest" />
-        <meta name="theme-color" content="#1a1a1a" />
-        <meta name="msapplication-TileColor" content="#1a1a1a" />
-      </head>
-      <body className="font-sans antialiased bg-white text-gray-900">
-        <Navigation lang={lang} />
-        <main className="min-h-screen">{children}</main>
-        <Footer lang={lang} />
-      </body>
-    </html>
+    <>
+      <Navigation lang={lang} />
+      <main className="min-h-screen">{children}</main>
+      <Footer lang={lang} />
+    </>
   );
 }
-

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Game, getGames } from "@/src/utils/games";
 
 interface NavigationProps {
   lang: string;
@@ -12,6 +13,12 @@ export function Navigation({ lang }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isHindi = lang === "hi";
+  const [randomGame, setRandomGame] = useState<Game | null>(null);
+  useEffect(() => {
+    const allGames = getGames();
+    const shuffled = [...allGames].sort(() => Math.random() - 0.5);
+    setRandomGame(shuffled[0]);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +35,6 @@ export function Navigation({ lang }: NavigationProps) {
     { href: `/${lang}/rules`, label: isHindi ? "नियम" : "Rules" },
     { href: `/${lang}/strategies`, label: isHindi ? "रणनीतियाँ" : "Strategies" },
     { href: `/${lang}/blog`, label: isHindi ? "ब्लॉग" : "Blog" },
-    { href: `/${lang}/download`, label: isHindi ? "डाउनलोड" : "Download" },
   ];
 
   const languageSwitcher = (
@@ -56,8 +62,8 @@ export function Navigation({ lang }: NavigationProps) {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href={`/${lang}`} className="flex items-center">
-              <Image
-                src="/logo.jpg"
+              <Image  
+                src="/icons/android-chrome-192x192.png"
                 alt={isHindi ? "रम्मी गेम्स लोगो" : "Rummy Games Logo"}
                 width={180}
                 height={60}
@@ -79,12 +85,16 @@ export function Navigation({ lang }: NavigationProps) {
               </Link>
             ))}
             {languageSwitcher}
-            <Link
-              href={`/${lang}/download`}
-              className="ml-4 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-            >
-              {isHindi ? "अभी डाउनलोड करें" : "Download Now"}
-            </Link>
+            {randomGame && (
+              <a
+                href={randomGame.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-4 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              >
+                {isHindi ? "अभी डाउनलोड करें" : "Download Now"}
+              </a>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -129,13 +139,17 @@ export function Navigation({ lang }: NavigationProps) {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href={`/${lang}/download`}
-                onClick={() => setIsMenuOpen(false)}
-                className="mx-4 mt-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-center"
-              >
-                {isHindi ? "अभी डाउनलोड करें" : "Download Now"}
-              </Link>
+              {randomGame && (
+                <a
+                  href={randomGame.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="mx-4 mt-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all text-center"
+                >
+                  {isHindi ? "अभी डाउनलोड करें" : "Download Now"}
+                </a>
+              )}
             </div>
           </div>
         )}
