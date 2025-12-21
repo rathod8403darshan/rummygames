@@ -42,7 +42,7 @@ export default async function BlogPage({
       excerpt: isHindi
         ? "अपने रम्मी गेम को अगले स्तर पर ले जाएं। उन्नत रणनीतियाँ जानें जो आपको एक्सपर्ट बनाएंगी।"
         : "Take your rummy game to the next level. Learn advanced strategies that will make you an expert.",
-      image: "/images/blog-2.jfif",
+      image: "/images/blog-2.jpg",
       date: isHindi ? "12 जनवरी 2024" : "January 12, 2024",
       category: isHindi ? "रणनीति" : "Strategy",
     },
@@ -52,7 +52,7 @@ export default async function BlogPage({
       excerpt: isHindi
         ? "टूर्नामेंट में जीतने के लिए सर्वश्रेष्ठ रणनीतियाँ और टिप्स। बड़े पुरस्कार जीतें।"
         : "Best strategies and tips to win tournaments. Win big prizes.",
-      image: "/images/blog-3.jfif",
+      image: "/images/blog-3.jpg",
       date: isHindi ? "10 जनवरी 2024" : "January 10, 2024",
       category: isHindi ? "टूर्नामेंट" : "Tournaments",
     },
@@ -62,7 +62,7 @@ export default async function BlogPage({
       excerpt: isHindi
         ? "रम्मी के सभी नियमों की विस्तृत व्याख्या। प्योर सीक्वेंस, सेट, जोकर और बहुत कुछ।"
         : "Detailed explanation of all rummy rules. Pure sequence, sets, joker and much more.",
-      image: "/images/blog-4.jfif",
+      image: "/images/blog-4.jpg",
       date: isHindi ? "8 जनवरी 2024" : "January 8, 2024",
       category: isHindi ? "नियम" : "Rules",
     },
@@ -72,7 +72,7 @@ export default async function BlogPage({
       excerpt: isHindi
         ? "वे गलतियाँ जो अधिकांश खिलाड़ी करते हैं और उनसे कैसे बचें। अपने गेम में सुधार करें।"
         : "Mistakes that most players make and how to avoid them. Improve your game.",
-      image: "/images/blog-5.jfif",
+      image: "/images/blog-5.jpg",
       date: isHindi ? "5 जनवरी 2024" : "January 5, 2024",
       category: isHindi ? "टिप्स" : "Tips",
     },
@@ -82,7 +82,7 @@ export default async function BlogPage({
       excerpt: isHindi
         ? "पॉइंट्स रम्मी, पूल रम्मी, डील रम्मी - सभी वेरिएंट के बारे में जानें।"
         : "Points Rummy, Pool Rummy, Deal Rummy - Learn about all variants.",
-      image: "/images/blog-6.jfif",
+      image: "/images/blog-6.jpg",
       date: isHindi ? "3 जनवरी 2024" : "January 3, 2024",
       category: isHindi ? "गाइड" : "Guide",
     },
