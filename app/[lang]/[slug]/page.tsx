@@ -145,17 +145,8 @@ export default async function GamePage({
       />
 
       {/* Hero Section */}
-      <Hero lang={lang} />
 
       {/* Main Games Section - ALL games, route-matched game FIRST */}
-      <div id="games">
-        <GamesListing
-          games={allGames}
-          lang={lang}
-          searchQuery={gameName}
-          featuredSlug={slug}
-        />
-      </div>
 
 
       <div className="py-12 bg-white">
@@ -262,11 +253,19 @@ export default async function GamePage({
               <p className="text-lg leading-relaxed">
                 {isHindi
                   ? `${gameName} भारत में रम्मी खिलाड़ियों के लिए सबसे भरोसेमंद प्लेटफॉर्मों में से एक है। हमारे पास लाखों संतुष्ट उपयोगकर्ता हैं जो नियमित रूप से हमारे प्लेटफॉर्म पर खेलते हैं और जीतते हैं। हमारा मिशन सुरक्षित, निष्पक्ष और मनोरंजक गेमिंग अनुभव प्रदान करना है।`
-                  : `${gameName} is one of the most trusted platforms for rummy players in India. We have millions of satisfied users who regularly play and win on our platform. Our mission is to provide a safe, fair, and entertaining gaming experience.`}
+                  : `${gameName} wwdwdwdqdqdqdq is one odwdwf the most trusted platforms for rummy players in India. We have millions of satisfied users who regularly play and win on our platform. Our mission is to provide a safe, fair, and entertaining gaming experience.`}
               </p>
             </div>
           </SEOContent>
         </div>
+      </div>
+      <div id="games">
+        <GamesListing
+          games={allGames}
+          lang={lang}
+          searchQuery={''}
+          featuredSlug={slug}
+        />
       </div>
     </>
   );
