@@ -87,7 +87,6 @@ export function Features({ lang }: FeaturesProps) {
   return (
     <section className="py-20 lg:py-32 bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
             {isHindi ? "क्यों चुनें रम्मी गेम्स ऐप?" : "Why Choose Rummy Games App?"}
@@ -99,22 +98,18 @@ export function Features({ lang }: FeaturesProps) {
           </p>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 space-y-4 space-x-4">
           {features.map((feature, index) => (
             <div
               key={index}
               className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
             >
-              {/* Gradient Background on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`}></div>
               
-              {/* Icon */}
               <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
                 {feature.icon}
               </div>
 
-              {/* Content */}
               <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-300">
                 {feature.title}
               </h3>
@@ -122,13 +117,10 @@ export function Features({ lang }: FeaturesProps) {
                 {feature.description}
               </p>
 
-              {/* Decorative Element */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-2xl"></div>
             </div>
           ))}
         </div>
 
-        {/* Additional Info */}
         <div className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 lg:p-12 text-white">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>

@@ -67,7 +67,7 @@ export function Navigation({ lang }: NavigationProps) {
                 alt={isHindi ? "रम्मी गेम्स लोगो" : "Rummy Games Logo"}
                 width={180}
                 height={60}
-                className="h-12 w-auto lg:h-16"
+                className="h-12 w-auto lg:h-16 rounded-[10px]"
                 priority
               />
             </Link>

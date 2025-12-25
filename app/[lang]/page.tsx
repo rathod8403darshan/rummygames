@@ -79,10 +79,8 @@ export default async function HomePage({
       <AdvancedStructuredData lang={lang} seoData={seoData} pageType="home" />
       <Breadcrumbs lang={lang} items={[{ label: isHindi ? "होम" : "Home", href: `/${lang}` }]} />
       
-      {/* Hero Section */}
       <Hero lang={lang} />
       
-      {/* Main Games Section - ALL games, route-matched game first */}
       <div id="games">
         <GamesListing 
           games={games} 
